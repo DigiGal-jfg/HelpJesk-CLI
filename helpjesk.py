@@ -127,8 +127,6 @@ def view_tickets():
         
         # --- Ask for ID ---
 
-        choose_another = False
-        
         while True:
             view_id = input("Enter ticket ID to view details or Enter for main menu: ").strip()
             if view_id == "":
@@ -143,52 +141,53 @@ def view_tickets():
             if ticket is None:
                 print("Error: enter a valid ticket ID.")
                 continue
+
+            choose_another = False
             
-            # --- Print ticket details ---
-            else:   
-                print("")
+        # --- Print ticket details --- 
+            print("")
+            print("-------------------------------")
+            print("   TICKET DETAILS")
+            print("-------------------------------")
+
+            print("Ticket ID:", ticket["id"])
+            print("Title:", ticket["title"])
+            print("Description:", ticket["description"])
+            print("Status:", ticket["status"])
+            print("Priority:", ticket["priority"])
+            print("Assigned to:", ticket["assigned_to"])
+            print("Notes:")
+            if not ticket["notes"]:
+                print("(none)")
+            else:
+                for note in ticket["notes"]:
+                    print("-", note)
+                
+            # --- Details sub-menu ---
+
+            while True:
                 print("-------------------------------")
-                print("   TICKET DETAILS")
+                print("   OPTIONS")
                 print("-------------------------------")
 
-                print("Ticket ID:", ticket["id"])
-                print("Title:", ticket["title"])
-                print("Description:", ticket["description"])
-                print("Status:", ticket["status"])
-                print("Priority:", ticket["priority"])
-                print("Assigned to:", ticket["assigned_to"])
-                print("Notes:")
-                if not ticket["notes"]:
-                    print("(none)")
+                print("1. Edit | 2. Back to ticket list | Enter to return to main menu")
+                
+                det_sub_choice = input("Choose an option: ").strip()
+                
+                if det_sub_choice == "":
+                    return
+                if det_sub_choice == "1":
+                    print("Edit function under construction")
+                    continue #temporary
+                elif det_sub_choice == "2":
+                    choose_another = True
+                    break
                 else:
-                    for note in ticket["notes"]:
-                        print("-", note)
-                    
-                # --- Details sub-menu ---
-
-                    while True:
-                        print("-------------------------------")
-                        print("   OPTIONS")
-                        print("-------------------------------")
-
-                        print("1. Edit | 2. Back to ticket list | Enter to return to main menu")
-                        
-                        det_sub_choice = input("Choose an option: ").strip()
-                        
-                        if det_sub_choice == "":
-                            return
-                        if det_sub_choice == "1":
-                            print("Edit function under construction")
-                            continue #temporary
-                        elif det_sub_choice == "2":
-                            choose_another = True
-                            break
-                        else:
-                            print("Error: enter a valid choice.")
-                            continue
-                    if choose_another == True:
-                        break
-            
+                    print("Error: enter a valid choice.")
+                    continue
+            if choose_another == True:
+                break
+        
             # --- Reprint Existing Tickets ---
             
             if choose_another == True:
