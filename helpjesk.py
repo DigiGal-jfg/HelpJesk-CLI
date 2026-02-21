@@ -7,8 +7,7 @@ def find_ticket_by_id(tickets, ticket_id):
     for ticket in tickets:
         if ticket["id"] == ticket_id:
             return ticket
-        else:
-            return None
+    return None
 
 
 def create_ticket():
