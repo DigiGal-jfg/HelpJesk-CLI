@@ -127,6 +127,8 @@ def view_tickets():
         
         # --- Ask for ID ---
 
+        choose_another = False
+        
         while True:
             view_id = input("Enter ticket ID to view details or Enter for main menu: ").strip()
             if view_id == "":
@@ -137,32 +139,30 @@ def view_tickets():
                 continue
             
             view_id = int(view_id)
-                    
-            found = False
-            choose_another = False
-
+            ticket = find_ticket_by_id(tickets, view_id)
+            if ticket is None:
+                print("Error: enter a valid ticket ID.")
+                continue
+            
             # --- Print ticket details ---
+            else:   
+                print("")
+                print("-------------------------------")
+                print("   TICKET DETAILS")
+                print("-------------------------------")
 
-            for ticket in tickets:
-                if ticket["id"] == view_id:
-                    found = True
-                    print("")
-                    print("-------------------------------")
-                    print("   TICKET DETAILS")
-                    print("-------------------------------")
-
-                    print("Ticket ID:", ticket["id"])
-                    print("Title:", ticket["title"])
-                    print("Description:", ticket["description"])
-                    print("Status:", ticket["status"])
-                    print("Priority:", ticket["priority"])
-                    print("Assigned to:", ticket["assigned_to"])
-                    print("Notes:")
-                    if not ticket["notes"]:
-                        print("(none)")
-                    else:
-                        for note in ticket["notes"]:
-                            print("-", note)
+                print("Ticket ID:", ticket["id"])
+                print("Title:", ticket["title"])
+                print("Description:", ticket["description"])
+                print("Status:", ticket["status"])
+                print("Priority:", ticket["priority"])
+                print("Assigned to:", ticket["assigned_to"])
+                print("Notes:")
+                if not ticket["notes"]:
+                    print("(none)")
+                else:
+                    for note in ticket["notes"]:
+                        print("-", note)
                     
                 # --- Details sub-menu ---
 
