@@ -1,8 +1,15 @@
-
-
 tickets = []
 operators = ["Lara", "Mario", "Luigi"]
 next_ticket_id = 1
+
+def find_ticket_by_id(tickets, ticket_id):
+        
+    for ticket in tickets:
+        if ticket["id"] == ticket_id:
+            return ticket
+        else:
+            return None
+
 
 def create_ticket():
     global next_ticket_id
