@@ -185,9 +185,7 @@ def view_tickets():
                 else:
                     print("Error: enter a valid choice.")
                     continue
-            if choose_another == True:
-                break
-        
+            
             # --- Reprint Existing Tickets ---
             
             if choose_another == True:
@@ -197,7 +195,7 @@ def view_tickets():
                 print("-------------------------------")
 
                 for ticket in tickets:
-                    print("Ticket ID:", ticket["id"], "| Title:", ticket["title"], "| Status:", ticket["status"], "| Priority:", ticket["priority"])
+                    print(f"Ticket ID: {ticket['id']} | Title: {ticket['title']} | Status: {ticket['status']} | Priority: {ticket['priority']} | Assigned to: {ticket['assigned_to']}")
             continue
 
 
