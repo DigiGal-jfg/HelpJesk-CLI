@@ -2,6 +2,35 @@ tickets = []
 operators = ["Lara", "Mario", "Luigi"]
 next_ticket_id = 1
 
+def print_error(error):
+    # Skriver ut felmeddelanden i rött (ANSI escape codes).
+
+    print("")
+    print(f"\033[31m{error}\033[0m")
+    print("")
+
+def ask_until_valid(get_function, message, print_error_message): # generic loop
+    while True:
+        result = get_function(message)
+
+        if result is not None:
+            return result
+        else:
+            print_error(print_error_message)
+
+def get_priority(prio_message):
+
+    prio_choice = input(prio_message).strip()
+    
+    if prio_choice == "1":
+        return "Low"
+    elif prio_choice == "2":
+        return "Medium"
+    elif prio_choice == "3":
+        return "High"
+    else:
+        return None
+
 def find_ticket_by_id(tickets, ticket_id):
         
     for ticket in tickets:
@@ -20,20 +49,7 @@ def create_ticket():
     
     description = input("Describe problem: ") # More detailed description
     
-    while True: # Priority loop
-
-        priority = input("Choose priority level: 1.Low, 2.Medium, 3.High: ")
-        
-        if priority.strip() == "1":
-            priority = "Low"
-        elif priority.strip() == "2":
-            priority = "Medium"
-        elif priority.strip() == "3":
-            priority = "High"
-        else:
-            print("Error, invalid choice. Valid options: 1, 2 or 3.")
-            continue
-        break
+    priority = ask_until_valid(get_priority, "Choose priority level: 1.Low, 2.Medium, 3.High: ", "Error, invalid choice. Valid options: 1, 2 or 3.")
 
     ticket = { # Ticket disctionary
         "id": next_ticket_id,
