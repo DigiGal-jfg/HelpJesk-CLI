@@ -65,7 +65,7 @@ def create_ticket():
         for index, name in enumerate(operators, start=1):
             print(f"{index}. {name}")
         
-        operator_choice = input("Select an operator or press Enter to cancel: ").strip()
+        operator_choice = input("Select an operator or press Enter to skip: ").strip()
         
         if operator_choice == (""):
             operator_choice = "Unassigned"
@@ -83,6 +83,13 @@ def create_ticket():
 
         operator_choice = operators[operator_choice - 1]
         break
+    
+    note = input("Add an internal note or press Enter to skip: ").strip()
+
+    notes = []
+
+    if note != "":
+        notes.append(note)
 
     ticket = { # Ticket disctionary
         "id": next_ticket_id,
@@ -91,7 +98,7 @@ def create_ticket():
         "status": "New",
         "priority": priority,
         "assigned_to": operator_choice,
-        "notes": []}
+        "notes": notes}
     
     tickets.append(ticket)
     next_ticket_id += 1
@@ -100,10 +107,14 @@ def create_ticket():
 
     print("-------------------------------")  
     print("Ticket ID:", ticket["id"])
-    print("Title:", title)
-    print("Description:", description)
-    print("Priority:", priority)
+    print("Title:", ticket["title"])
+    print("Description:", ticket["description"])
+    print("Priority:", ticket["priority"])
     print("Assigned to:", ticket["assigned_to"])
+    if ticket["notes"]:
+        print("Notes:")
+        for note in ticket["notes"]:
+            print("-", note)
     return
                
 def view_tickets():  
