@@ -42,6 +42,30 @@ def get_priority_choice(prio_message):
     else:
         return None
 
+def choose_operator(operators):
+    while True:    
+        for index, name in enumerate(operators, start=1):
+            print(f"{index}. {name}")
+        
+        operator_choice = input("Select an operator or press Enter to skip: ").strip()
+        
+        if operator_choice == (""):
+            operator_choice = "Unassigned"
+            return operator_choice
+        
+        if not operator_choice.isdigit():
+            print_red("Error: Invalid operator.")
+            continue
+
+        operator_choice = int(operator_choice)
+        
+        if operator_choice < 1 or operator_choice > len(operators):
+            print_red("Error: Invalid operator.")
+            continue
+
+        operator_choice = operators[operator_choice - 1]
+        return operator_choice
+
 def find_ticket_by_id(tickets, ticket_id):
         
     for ticket in tickets:
@@ -61,28 +85,7 @@ def create_ticket():
     
     priority = ask_until_valid(get_priority_choice, "Choose priority level: 1.Low, 2.Medium, 3.High: ", "Error, invalid choice. Valid options: 1, 2 or 3.")
 
-    while True:    
-        for index, name in enumerate(operators, start=1):
-            print(f"{index}. {name}")
-        
-        operator_choice = input("Select an operator or press Enter to skip: ").strip()
-        
-        if operator_choice == (""):
-            operator_choice = "Unassigned"
-            break
-        if not operator_choice.isdigit():
-            print_red("Error: Invalid operator.")
-            continue
-
-        operator_choice = int(operator_choice)
-
-        
-        if operator_choice < 1 or operator_choice > len(operators):
-            print_red("Error: Invalid operator.")
-            continue
-
-        operator_choice = operators[operator_choice - 1]
-        break
+    choose_operator(operators)
     
     note = input("Add an internal note or press Enter to skip: ").strip()
 
