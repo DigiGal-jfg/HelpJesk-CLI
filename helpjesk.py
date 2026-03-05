@@ -8,6 +8,10 @@ def print_red(message):
     print(f"\033[31m{message}\033[0m")
     print("")
 
+def print_yellow(message):
+
+    print(f"\033[33m{message}\033[0m")
+
 def ask_until_valid(get_function, message, error_message):
     
     while True:
@@ -73,19 +77,32 @@ def find_ticket_by_id(tickets, ticket_id):
             return ticket
     return None
 
+def print_ticket_summary(ticket):
+
+    print_yellow("-------------------------------")  
+    print("Ticket ID:", ticket["id"])
+    print("Title:", ticket["title"])
+    print("Description:", ticket["description"])
+    print("Priority:", ticket["priority"])
+    print("Assigned to:", ticket["assigned_to"])
+    if ticket["notes"]:
+        print("Notes:")
+        for note in ticket["notes"]:
+            print("-", note)
+
 def create_ticket():
     global next_ticket_id
     print("")
-    print("-------------------------------")
+    print_yellow("-------------------------------")
     print("   CREATE NEW TICKET")
-    print("-------------------------------") 
+    print_yellow("-------------------------------") 
     title = input("Enter ticket title: ") # Ticket title entry
     
     description = input("Describe problem: ") # More detailed description
     
     priority = ask_until_valid(get_priority_choice, "Choose priority level: 1.Low, 2.Medium, 3.High: ", "Error, invalid choice. Valid options: 1, 2 or 3.")
 
-    choose_operator(operators)
+    operator_choice = choose_operator(operators)
     
     note = input("Add an internal note or press Enter to skip: ").strip()
 
@@ -94,7 +111,7 @@ def create_ticket():
     if note != "":
         notes.append(note)
 
-    ticket = { # Ticket disctionary
+    ticket = { # Ticket dictionary
         "id": next_ticket_id,
         "title": title,
         "description": description,
@@ -108,16 +125,7 @@ def create_ticket():
 
     # --- Ticket summary print ---
 
-    print("-------------------------------")  
-    print("Ticket ID:", ticket["id"])
-    print("Title:", ticket["title"])
-    print("Description:", ticket["description"])
-    print("Priority:", ticket["priority"])
-    print("Assigned to:", ticket["assigned_to"])
-    if ticket["notes"]:
-        print("Notes:")
-        for note in ticket["notes"]:
-            print("-", note)
+    print_ticket_summary(ticket)
     return
                
 def view_tickets():  
@@ -130,9 +138,9 @@ def view_tickets():
 
     else:
         print("")
-        print("-------------------------------")
+        print_yellow("-------------------------------")
         print("   EXISTING TICKETS")
-        print("-------------------------------")
+        print_yellow("-------------------------------")
 
         for ticket in tickets:
             print(f"Ticket ID: {ticket['id']} | Title: {ticket['title']} | Status: {ticket['status']} | Priority: {ticket['priority']} | Assigned to: {ticket['assigned_to']}")
@@ -157,30 +165,14 @@ def view_tickets():
             choose_another = False
             
         # --- Print ticket details --- 
-            print("")
-            print("-------------------------------")
-            print("   TICKET DETAILS")
-            print("-------------------------------")
-
-            print("Ticket ID:", ticket["id"])
-            print("Title:", ticket["title"])
-            print("Description:", ticket["description"])
-            print("Status:", ticket["status"])
-            print("Priority:", ticket["priority"])
-            print("Assigned to:", ticket["assigned_to"])
-            print("Notes:")
-            if not ticket["notes"]:
-                print("(none)")
-            else:
-                for note in ticket["notes"]:
-                    print("-", note)
+            print_ticket_summary(ticket)
                 
             # --- Details sub-menu ---
 
             while True:
-                print("-------------------------------")
+                print_yellow("-------------------------------")
                 print("   OPTIONS")
-                print("-------------------------------")
+                print_yellow("-------------------------------")
 
                 print("1. Edit | 2. Back to ticket list | Enter to return to main menu")
                 
@@ -202,9 +194,9 @@ def view_tickets():
             
             if choose_another == True:
                 print("")
-                print("-------------------------------")
+                print_yellow("-------------------------------")
                 print("   EXISTING TICKETS")
-                print("-------------------------------")
+                print_yellow("-------------------------------")
 
                 for ticket in tickets:
                     print(f"Ticket ID: {ticket['id']} | Title: {ticket['title']} | Status: {ticket['status']} | Priority: {ticket['priority']} | Assigned to: {ticket['assigned_to']}")
@@ -215,12 +207,12 @@ def edit_ticket():
     input("Press Enter to return to main menu")
 
 def main():
-    print("Welcome to HELPJESK version 0.1")
+    print_yellow("Welcome to HELPJESK version 0.1")
     while True:
         print("")
-        print("-------------------------------")
+        print_yellow("-------------------------------")
         print("   MAIN MENU")
-        print("-------------------------------")
+        print_yellow("-------------------------------")
 
         print("1. Create ticket")
         print("2. View all tickets")
