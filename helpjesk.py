@@ -90,24 +90,26 @@ def print_ticket_summary(ticket):
         for note in ticket["notes"]:
             print("-", note)
 
+def add_note(note_message):
+
+    note = input(note_message).strip()
+    return note
+    
+
 def create_ticket():
     global next_ticket_id
     print("")
     print_yellow("-------------------------------")
     print("   CREATE NEW TICKET")
     print_yellow("-------------------------------") 
+    
     title = input("Enter ticket title: ") # Ticket title entry
-    
     description = input("Describe problem: ") # More detailed description
-    
     priority = ask_until_valid(get_priority_choice, "Choose priority level: 1.Low, 2.Medium, 3.High: ", "Error, invalid choice. Valid options: 1, 2 or 3.")
-
     operator_choice = choose_operator(operators)
-    
-    note = input("Add an internal note or press Enter to skip: ").strip()
+    note = add_note("Add an internal note or press Enter to skip: ")
 
     notes = []
-
     if note != "":
         notes.append(note)
 
