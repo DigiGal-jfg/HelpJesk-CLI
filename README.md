@@ -7,9 +7,7 @@ This is an ongoing portfolio project focused on clean code structure, incrementa
 ---
 
 ## Purpose
-
 The aim of HelpJesk is not to build an enterprise ticketing platform, but to:
-
 - Practise structured Python scripting in an IT-operations context
 - Develop clean, modular code that can grow without becoming messy
 - Build habits around versioning, refactoring, and separation of responsibilities
@@ -19,32 +17,41 @@ Each version introduces deliberate improvements. Structure comes before complexi
 
 ---
 
-## Current Version – v0.1 (Foundation)
+## Current Version – v0.2 (Structural Refactor)
+- Full separation of responsibilities across small, focused functions
+- Reusable input validation via `ask_until_valid()`
+- Colour-coded CLI output via `print_red()` and `print_yellow()`
+- Operator assignment and notes collected during ticket creation flow
+- Ticket summary and ticket list printing extracted into reusable functions
+- Ticket ID validation extracted into `get_valid_id()`
+- Program wrapped in `main()` with `if __name__ == "__main__"` guard
+- Data stored in memory using a list of dictionaries
 
+v0.2 does not introduce new features — it restructures v0.1 into a cleaner, more maintainable foundation ready for persistent storage and editing functionality.
+
+The original v0.1 code is preserved in `helpjesk_original.py` for reference.
+
+---
+
+## Version History
+
+### v0.1 – Foundation
 - Ticket creation with title, description, and priority selection
-- Post-creation submenu for operator assignment (notes option was a placeholder only)
+- Post-creation submenu for operator assignment
 - Basic input validation inline within functions
 - Ticket listing with compact overview
 - Ticket detail view with notes display
-- Error messages printed directly in plain text
-- Data stored in memory using a list of dictionaries
+- Error messages in plain text
 - Main menu and program flow as loose code at the bottom of the file
 
-v0.1 establishes the core workflow and basic functionality. Code structure was functional but dense — functions handled multiple responsibilities and the foundation for refactoring was identified early.
+v0.1 established the core workflow and basic functionality. Code structure was functional but dense — functions handled multiple responsibilities and the foundation for refactoring was identified early.
 
 ---
 
 ## Development Roadmap
 
-### v0.2 – Refactor *(in progress)*
-- Separation of responsibilities across smaller, focused functions
-- Reusable input validation pattern via `ask_until_valid()`
-- Colour-coded CLI output
-- Operator assignment and notes moved into ticket creation flow
-- Cleaner main menu structure via `main()` function
-
 ### v0.3 – Persistent Storage
-- Store tickets in JSON or SQLite
+- Store tickets in JSON
 - Tickets persist between sessions
 
 ### v0.4 – Ticket Editing
@@ -61,9 +68,7 @@ v0.1 establishes the core workflow and basic functionality. Code structure was f
 ---
 
 ## Data Structure
-
 Tickets are stored in memory as a list of dictionaries:
-
 ```python
 {
     "id": 1,
@@ -76,23 +81,14 @@ Tickets are stored in memory as a list of dictionaries:
 }
 ```
 
-### Future Iterations
-- Persistent storage via JSON or SQLite
-- Timestamped notes
-- Dynamic operator management (add/remove operators at runtime)
-- Ticket filtering and search
-- Possible migration to class-based structure
-
 ---
 
 ## Requirements
-
 - Python 3
 
 ---
 
 ## Running the Program
-
 Open a terminal in the project directory and run:
 
     python helpjesk.py
@@ -100,7 +96,6 @@ Open a terminal in the project directory and run:
 ---
 
 ## Background
-
 HelpJesk started as a self-chosen project (eget val) during the Programmering 1 course within the Drifttekniker (IT-drift) programme.  
 It was built and refactored incrementally as a way to practise Python fundamentals, learn clean code structure, and produce a portfolio piece that reflects real development habits rather than a one-shot submission.
 
