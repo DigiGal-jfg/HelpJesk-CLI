@@ -1,6 +1,20 @@
+import os
+import json
 tickets = []
 operators = ["Lara", "Mario", "Luigi"]
 next_ticket_id = 1
+
+def load_tickets_json():
+    if os.path.exists("tickets.json"):
+        tickets = json.load(open("tickets.json", "r"))
+        return tickets
+    else:
+        tickets = []
+        json.dump([], open("tickets.json", "w"))
+        return tickets
+
+def save_tickets_json(tickets):
+    json.dump(tickets, open("tickets.json","w"))
 
 def print_red(message):
 
@@ -156,6 +170,7 @@ def create_ticket():
     
     tickets.append(ticket)
     next_ticket_id += 1
+    save_tickets_json(tickets)
 
     # --- Ticket summary print ---
 
@@ -223,8 +238,11 @@ def edit_ticket():
 
 def main():
     
+    global tickets
+    tickets = load_tickets_json()
+
     print("")
-    print("Welcome to HELPJESK version 0.2")
+    print("Welcome to HELPJESK version 0.3")
     
     while True:
         print("")
