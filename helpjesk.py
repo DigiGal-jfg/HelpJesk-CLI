@@ -4,9 +4,7 @@ next_ticket_id = 1
 
 def print_red(message):
 
-    print("")
     print(f"\033[31m{message}\033[0m")
-    print("")
 
 def print_yellow(message):
 
@@ -48,7 +46,9 @@ def get_priority_choice(prio_message):
 
 def choose_operator(operators):
     while True:    
+        print("-------------------------------")
         for index, name in enumerate(operators, start=1):
+            
             print(f"{index}. {name}")
         
         operator_choice = input("Select an operator or press Enter to skip: ").strip()
@@ -79,16 +79,21 @@ def find_ticket_by_id(tickets, ticket_id):
 
 def print_ticket_summary(ticket):
 
-    print_yellow("-------------------------------")  
+    print("-------------------------------")  
     print("Ticket ID:", ticket["id"])
     print("Title:", ticket["title"])
     print("Description:", ticket["description"])
     print("Priority:", ticket["priority"])
     print("Assigned to:", ticket["assigned_to"])
     if ticket["notes"]:
-        print("Notes:")
-        for note in ticket["notes"]:
-            print("-", note)
+        print("Notes:", ticket["notes"][0])
+        for note in ticket["notes"][1:]:
+            print("-",note)
+
+def print_tickets_list(tickets):
+
+    for ticket in tickets:
+        print(f"Ticket ID: {ticket['id']} | Title: {ticket['title']} | Status: {ticket['status']} | Priority: {ticket['priority']} | Assigned to: {ticket['assigned_to']}")    
 
 def get_note(note_message):
 
@@ -103,12 +108,32 @@ def get_ticket_input(input_message):
     else:
         return result
 
+def get_valid_id():
+    while True:
+        get_id = input("Enter ticket ID to view details or Enter for main menu: ").strip()
+        
+        if get_id == "":
+            return
+            
+        if not get_id.isdigit():
+            print_red("Error: enter a valid ticket ID.")
+            continue
+            
+        get_id = int(get_id)
+        ticket = find_ticket_by_id(tickets, get_id)
+
+        if ticket is None:
+            print_red("Error: enter a valid ticket ID.")
+        else:
+            return ticket
+
 def create_ticket():
+    
     global next_ticket_id
     print("")
-    print_yellow("-------------------------------")
-    print("   CREATE NEW TICKET")
-    print_yellow("-------------------------------") 
+    print("-------------------------------")
+    print_yellow("   CREATE NEW TICKET")
+    print("-------------------------------") 
     
     title = ask_until_valid(get_ticket_input, "Enter ticket title: ", "Error: enter a title.") # Ticket title entry
     description = ask_until_valid(get_ticket_input, "Describe problem: ", "Error: enter a description.") # More detailed description
@@ -138,50 +163,37 @@ def create_ticket():
     return
                
 def view_tickets():  
+    print("")
+    print("-------------------------------")
+    print_yellow("   EXISTING TICKETS")
+    print("-------------------------------")
+    
     if tickets == []:
-        print("No tickets found.")
-        input("Press Enter to return to main menu")
+        print_red("No tickets found.")
         return  
     
-    # --- Print compact list ---
-
     else:
-        print("")
-        print_yellow("-------------------------------")
-        print("   EXISTING TICKETS")
-        print_yellow("-------------------------------")
-
-        for ticket in tickets:
-            print(f"Ticket ID: {ticket['id']} | Title: {ticket['title']} | Status: {ticket['status']} | Priority: {ticket['priority']} | Assigned to: {ticket['assigned_to']}")
+        print_tickets_list(tickets)
         
         # --- Ask for ID ---
 
         while True:
-            view_id = input("Enter ticket ID to view details or Enter for main menu: ").strip()
-            if view_id == "":
-                return
-            
-            if not view_id.isdigit():
-                print("Error: enter a valid ticket ID.")
-                continue
-            
-            view_id = int(view_id)
-            ticket = find_ticket_by_id(tickets, view_id)
+            ticket = get_valid_id()
             if ticket is None:
-                print("Error: enter a valid ticket ID.")
-                continue
+                return
 
             choose_another = False
             
         # --- Print ticket details --- 
+            
             print_ticket_summary(ticket)
                 
             # --- Details sub-menu ---
 
             while True:
-                print_yellow("-------------------------------")
-                print("   OPTIONS")
-                print_yellow("-------------------------------")
+                print("-------------------------------")
+                print_yellow("   OPTIONS")
+                print("-------------------------------")
 
                 print("1. Edit | 2. Back to ticket list | Enter to return to main menu")
                 
@@ -190,25 +202,19 @@ def view_tickets():
                 if details_sub_choice == "":
                     return
                 if details_sub_choice == "1":
-                    print("Edit function under construction")
+                    print_yellow("Edit function under construction")
                     continue #temporary
                 elif details_sub_choice == "2":
                     choose_another = True
                     break
                 else:
-                    print("Error: enter a valid choice.")
+                    print_red("Error: enter a valid choice.")
                     continue
             
             # --- Reprint Existing Tickets ---
             
             if choose_another == True:
-                print("")
-                print_yellow("-------------------------------")
-                print("   EXISTING TICKETS")
-                print_yellow("-------------------------------")
-
-                for ticket in tickets:
-                    print(f"Ticket ID: {ticket['id']} | Title: {ticket['title']} | Status: {ticket['status']} | Priority: {ticket['priority']} | Assigned to: {ticket['assigned_to']}")
+                print_tickets_list(tickets)
             continue
 
 def edit_ticket():
@@ -216,12 +222,15 @@ def edit_ticket():
     input("Press Enter to return to main menu")
 
 def main():
-    print_yellow("Welcome to HELPJESK version 0.1")
+    
+    print("")
+    print("Welcome to HELPJESK version 0.2")
+    
     while True:
         print("")
-        print_yellow("-------------------------------")
-        print("   MAIN MENU")
-        print_yellow("-------------------------------")
+        print("-------------------------------")
+        print_yellow("   MAIN MENU")
+        print("-------------------------------")
 
         print("1. Create ticket")
         print("2. View all tickets")
