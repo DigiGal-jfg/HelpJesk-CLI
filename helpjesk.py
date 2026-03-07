@@ -1,6 +1,21 @@
+import os
+import json
+import textwrap
 tickets = []
 operators = ["Lara", "Mario", "Luigi"]
-next_ticket_id = 1
+next_ticket_id = 0
+
+def load_tickets_json():
+    if os.path.exists("tickets.json"):
+        tickets = json.load(open("tickets.json", "r"))
+        return tickets
+    else:
+        tickets = []
+        json.dump([], open("tickets.json", "w"))
+        return tickets
+
+def save_tickets_json(tickets):
+    json.dump(tickets, open("tickets.json","w"), indent=4)
 
 def print_red(message):
 
@@ -9,6 +24,15 @@ def print_red(message):
 def print_yellow(message):
 
     print(f"\033[33m{message}\033[0m")
+
+def print_cyan(message):
+
+    return(f"\033[36m{message}\033[0m")
+
+def wrap_text(message, width):
+    lines = (textwrap.wrap(message, width))
+    for line in lines:
+        print(line)
 
 def ask_until_valid(get_function, message, error_message):
     
@@ -70,6 +94,15 @@ def choose_operator(operators):
         operator_choice = operators[operator_choice - 1]
         return operator_choice
 
+def load_ticket_id():
+    
+    if tickets:
+        next_ticket = tickets[-1]["id"] + 1
+        return next_ticket
+    else:
+        next_ticket = 1
+        return next_ticket
+
 def find_ticket_by_id(tickets, ticket_id):
         
     for ticket in tickets:
@@ -80,20 +113,20 @@ def find_ticket_by_id(tickets, ticket_id):
 def print_ticket_summary(ticket):
 
     print("-------------------------------")  
-    print("Ticket ID:", ticket["id"])
-    print("Title:", ticket["title"])
-    print("Description:", ticket["description"])
-    print("Priority:", ticket["priority"])
-    print("Assigned to:", ticket["assigned_to"])
+    print("TICKET ID:", print_cyan(ticket["id"]))
+    print("TITLE:", print_cyan(ticket["title"]))
+    wrap_text("DESCRIPTION: " + print_cyan(ticket["description"]), width=80)
+    print("PRIORITY:", print_cyan(ticket["priority"]))
+    print("ASSIGNED TO:", print_cyan(ticket["assigned_to"]))
     if ticket["notes"]:
-        print("Notes:", ticket["notes"][0])
+        print("NOTES:", print_cyan(ticket["notes"][0]))
         for note in ticket["notes"][1:]:
-            print("-",note)
+            wrap_text("- " + note, width=80)
 
 def print_tickets_list(tickets):
 
     for ticket in tickets:
-        print(f"Ticket ID: {ticket['id']} | Title: {ticket['title']} | Status: {ticket['status']} | Priority: {ticket['priority']} | Assigned to: {ticket['assigned_to']}")    
+        print(f"TICKET ID: {print_cyan(ticket['id'])}  | TITLE: {print_cyan(ticket['title'])} | STATUS: {print_cyan(ticket['status'])} | PRIORITY: {print_cyan(ticket['priority'])} | ASSIGNED TO: {print_cyan(ticket['assigned_to'])}")    
 
 def get_note(note_message):
 
@@ -156,6 +189,7 @@ def create_ticket():
     
     tickets.append(ticket)
     next_ticket_id += 1
+    save_tickets_json(tickets)
 
     # --- Ticket summary print ---
 
@@ -223,8 +257,12 @@ def edit_ticket():
 
 def main():
     
+    global tickets, next_ticket_id
+    tickets = load_tickets_json()
+    next_ticket_id = load_ticket_id()
+
     print("")
-    print("Welcome to HELPJESK version 0.2")
+    print("Welcome to HELPJESK version 0.3")
     
     while True:
         print("")

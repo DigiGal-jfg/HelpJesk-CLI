@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "title": "Desktop background not updating after policy change",
+        "description": "User reports that the desktop background has not updated following a recent company-wide policy change. Device has been restarted once with no visible change. No functional impact reported.",
+        "status": "New",
+        "priority": "Low",
+        "assigned_to": "Mario",
+        "notes": [
+            "Likely Group Policy refresh delay."
+        ]
+    },
+    {
+        "id": 2,
+        "title": "External emails remain in Outbox",
+        "description": "User is able to send internal emails successfully, but emails addressed to external recipients remain stuck in the Outbox. Issue began approximately 09:00 today. General internet connectivity confirmed working.",
+        "status": "New",
+        "priority": "High",
+        "assigned_to": "Lara",
+        "notes": []
+    },
+    {
+        "id": 3,
+        "title": "Printer not found on second floor",
+        "description": "User cannot see the second floor network printer in the list of available devices. Other users on the same floor are unaffected. No recent changes to the device reported.",
+        "status": "New",
+        "priority": "Low",
+        "assigned_to": "Mario",
+        "notes": [
+            "Checked print spooler service, running normally."
+        ]
+    },
+    {
+        "id": 4,
+        "title": "VPN connection drops after 10 minutes",
+        "description": "User reports that the VPN disconnects automatically after approximately 10 minutes of use. Reconnecting manually works but the issue repeats. Affects working from home only.",
+        "status": "New",
+        "priority": "High",
+        "assigned_to": "Luigi",
+        "notes": []
+    }
+]
