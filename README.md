@@ -17,7 +17,22 @@ Each version introduces deliberate improvements. Structure comes before complexi
 
 ---
 
-## Current Version – v0.2 (Structural Refactor)
+## Current Version – v0.3 (Persistent Storage)
+- Tickets now persist between sessions via JSON storage
+- `save_tickets_json()` writes the full ticket list to `tickets.json` on every change
+- `load_tickets_json()` reads tickets from file on startup, creating the file if it doesn't exist
+- `load_ticket_id()` restores the correct next ticket ID from saved data on startup
+- Text wrapping added to long descriptions in ticket summary view via `wrap_text()`
+- Visual formatting improved — cyan labels and caps distinguish program text from user-entered content
+- `print_cyan()` added as a returning function allowing individual parts of a line to be coloured
+
+v0.3 introduces the first persistent data layer. Tickets survive program restarts without changing the core ticket creation or viewing workflow.
+
+---
+
+## Version History
+
+### v0.2 – Structural Refactor
 - Full separation of responsibilities across small, focused functions
 - Reusable input validation via `ask_until_valid()`
 - Colour-coded CLI output via `print_red()` and `print_yellow()`
@@ -27,13 +42,7 @@ Each version introduces deliberate improvements. Structure comes before complexi
 - Program wrapped in `main()` with `if __name__ == "__main__"` guard
 - Data stored in memory using a list of dictionaries
 
-v0.2 does not introduce new features — it restructures v0.1 into a cleaner, more maintainable foundation ready for persistent storage and editing functionality.
-
-The original v0.1 code is preserved in `helpjesk_original.py` for reference.
-
----
-
-## Version History
+v0.2 did not introduce new features — it restructured v0.1 into a cleaner, more maintainable foundation ready for persistent storage and editing functionality.
 
 ### v0.1 – Foundation
 - Ticket creation with title, description, and priority selection
@@ -46,24 +55,25 @@ The original v0.1 code is preserved in `helpjesk_original.py` for reference.
 
 v0.1 established the core workflow and basic functionality. Code structure was functional but dense — functions handled multiple responsibilities and the foundation for refactoring was identified early.
 
+The original v0.1 code is preserved in `helpjesk_original.py` for reference.
 ---
 
 ## Development Roadmap
-
-### v0.3 – Persistent Storage
-- Store tickets in JSON
-- Tickets persist between sessions
 
 ### v0.4 – Ticket Editing
 - Status updates (New → In Progress → Resolved → Closed)
 - Operator reassignment
 - Adding additional notes to existing tickets
 
+### v0.5 – Class-Based Refactor
+- Migrate ticket structure to a `Ticket` class
+- Bundle ticket data and ticket-related functions into a single self-contained structure
+- Improve code readability and separation of responsibilities
+
 ### Future Iterations
 - Timestamped notes
 - Dynamic operator management (add/remove operators at runtime)
 - Ticket filtering and search
-- Possible migration to class-based structure
 
 ---
 
