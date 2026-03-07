@@ -2,7 +2,7 @@ import os
 import json
 tickets = []
 operators = ["Lara", "Mario", "Luigi"]
-next_ticket_id = 1
+next_ticket_id = 0
 
 def load_tickets_json():
     if os.path.exists("tickets.json"):
@@ -14,7 +14,7 @@ def load_tickets_json():
         return tickets
 
 def save_tickets_json(tickets):
-    json.dump(tickets, open("tickets.json","w"))
+    json.dump(tickets, open("tickets.json","w"), indent=4)
 
 def print_red(message):
 
@@ -83,6 +83,15 @@ def choose_operator(operators):
 
         operator_choice = operators[operator_choice - 1]
         return operator_choice
+
+def load_ticket_id():
+    
+    if tickets:
+        next_ticket = tickets[-1]["id"] + 1
+        return next_ticket
+    else:
+        next_ticket = 1
+        return next_ticket
 
 def find_ticket_by_id(tickets, ticket_id):
         
@@ -238,8 +247,9 @@ def edit_ticket():
 
 def main():
     
-    global tickets
+    global tickets, next_ticket_id
     tickets = load_tickets_json()
+    next_ticket_id = load_ticket_id()
 
     print("")
     print("Welcome to HELPJESK version 0.3")
