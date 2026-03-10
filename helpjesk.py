@@ -46,12 +46,26 @@ def ask_until_valid(get_function, message, error_message):
 
 def main_menu_choice(mm_message):
 
-    mm_options= ["1", "2", "3", "0"]    
+    mm_options = ["1", "2", "3", "0"]    
 
-    mm_choice = (input(mm_message)).strip()
+    mm_choice = input(mm_message).strip()
 
     if mm_choice in mm_options:
         return int(mm_choice)
+    else:
+        return None
+
+def edit_menu_choice(edit_message):
+
+    edit_options = ["1", "2", "3", "4", "5", "6"]
+
+    edit_choice = input(edit_message).strip()
+
+    if edit_choice == "":
+        return 0
+
+    if edit_choice in edit_options:
+        return int(edit_choice)
     else:
         return None
 
@@ -68,6 +82,9 @@ def get_priority_choice(prio_message):
     else:
         return None
 
+def get_status_choice(status_message):
+    pass
+
 def choose_operator(operators):
     while True:    
         print("-------------------------------")
@@ -75,7 +92,7 @@ def choose_operator(operators):
             
             print(f"{index}. {name}")
         
-        operator_choice = input("Select an operator or press Enter to skip: ").strip()
+        operator_choice = input("Select an operator or press 'Enter' to skip: ").strip()
         
         if operator_choice == (""):
             operator_choice = "Unassigned"
@@ -143,7 +160,7 @@ def get_ticket_input(input_message):
 
 def get_valid_id():
     while True:
-        get_id = input("Enter ticket ID to view details or Enter for main menu: ").strip()
+        get_id = input("Enter ticket ID to view details or 'Enter' for main menu: ").strip()
         
         if get_id == "":
             return
@@ -168,11 +185,11 @@ def create_ticket():
     print_yellow("   CREATE NEW TICKET")
     print("-------------------------------") 
     
-    title = ask_until_valid(get_ticket_input, "Enter ticket title: ", "Error: enter a title.") # Ticket title entry
+    title = ask_until_valid(get_ticket_input, "Enter a title: ", "Error: enter a title.") # Ticket title entry
     description = ask_until_valid(get_ticket_input, "Describe problem: ", "Error: enter a description.") # More detailed description
     priority = ask_until_valid(get_priority_choice, "Choose priority level: 1.Low, 2.Medium, 3.High: ", "Error: invalid choice. Valid options: 1, 2 or 3.")
     operator_choice = choose_operator(operators)
-    note = get_note("Add an internal note or press Enter to skip: ")
+    note = get_note("Add an internal note or press 'Enter' to skip: ")
 
     notes = []
     if note != "":
@@ -229,7 +246,7 @@ def view_tickets():
                 print_yellow("   OPTIONS")
                 print("-------------------------------")
 
-                print("1. Edit | 2. Back to ticket list | Enter to return to main menu")
+                print("1. Edit | 2. Back to ticket list | 'Enter' to return to main menu")
                 
                 details_sub_choice = input("Choose an option: ").strip()
                 
@@ -251,9 +268,61 @@ def view_tickets():
                 print_tickets_list(tickets)
             continue
 
-def edit_ticket():
-    print("Ticket Editing under construction")
-    input("Press Enter to return to main menu")
+def edit_ticket(ticket=None):
+    print("")
+    print("-------------------------------")
+    print_yellow("   TICKET EDITING")
+    print("-------------------------------")
+   
+    if tickets == []:
+        print_red("No tickets found.")
+        return  
+    if ticket is None:
+
+        while True:
+            ticket = get_valid_id()
+            if ticket is None:
+                return
+            break
+        
+    print_ticket_summary(ticket)
+
+    while True:
+        print("-------------------------------")
+        print("1. Change status")
+        print("2. Reassign operator")
+        print("3. Add note")
+        print("4. Edit title")
+        print("5. Edit description")
+        print("6. Change priority")
+        print_cyan("'Enter' to return to main menu")    
+
+        edit_choice = edit_menu_choice("Choose an option: ")
+
+        if edit_choice == 1:
+            pass
+        elif edit_choice == 2:
+            ticket["assigned_to"] = choose_operator(operators)
+            save_tickets_json(tickets)
+
+        elif edit_choice == 3:
+            ticket["notes"].append(get_note("Add an internal note: "))
+            save_tickets_json(tickets)
+
+        elif edit_choice == 4:
+            ticket["title"] = get_ticket_input("Enter a title: ")
+            save_tickets_json(tickets)
+
+        elif edit_choice == 5:
+            ticket["description"] = get_ticket_input("Enter a description: ")
+            save_tickets_json(tickets)
+
+        elif edit_choice == 6:
+            ticket["priority"] = get_priority_choice("Choose priority level: 1.Low, 2.Medium, 3.High: ")
+            save_tickets_json(tickets)
+
+        elif edit_choice == 0:
+            return
 
 def main():
     
@@ -262,7 +331,7 @@ def main():
     next_ticket_id = load_ticket_id()
 
     print("")
-    print("Welcome to HELPJESK version 0.3")
+    print("Welcome to HELPJESK version 0.4")
     
     while True:
         print("")
