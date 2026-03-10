@@ -160,7 +160,7 @@ def get_ticket_input(input_message):
 
 def get_valid_id():
     while True:
-        get_id = input("Enter ticket ID to view details or 'Enter' for main menu: ").strip()
+        get_id = input("Enter ticket ID to view details or press 'Enter' for main menu: ").strip()
         
         if get_id == "":
             return
@@ -246,7 +246,7 @@ def view_tickets():
                 print_yellow("   OPTIONS")
                 print("-------------------------------")
 
-                print("1. Edit | 2. Back to ticket list | 'Enter' to return to main menu")
+                print("1. Edit | 2. Back to ticket list | Press 'Enter' to return to main menu")
                 
                 details_sub_choice = input("Choose an option: ").strip()
                 
@@ -295,7 +295,7 @@ def edit_ticket(ticket=None):
         print("4. Edit title")
         print("5. Edit description")
         print("6. Change priority")
-        print_cyan("'Enter' to return to main menu")    
+        print("Press 'Enter' to return to main menu")   
 
         edit_choice = edit_menu_choice("Choose an option: ")
 
@@ -304,22 +304,32 @@ def edit_ticket(ticket=None):
         elif edit_choice == 2:
             ticket["assigned_to"] = choose_operator(operators)
             save_tickets_json(tickets)
+            print(print_cyan(f"Operator: {ticket['assigned_to']}"))
+            input("Press 'Enter' to continue.")
 
         elif edit_choice == 3:
             ticket["notes"].append(get_note("Add an internal note: "))
             save_tickets_json(tickets)
+            print(print_cyan(f"Note: {ticket['notes'][-1]}"))
+            input("Press 'Enter' to continue.")
 
         elif edit_choice == 4:
             ticket["title"] = get_ticket_input("Enter a title: ")
             save_tickets_json(tickets)
+            print(print_cyan(f"Title: {ticket['title']}"))
+            input("Press 'Enter' to continue.")
 
         elif edit_choice == 5:
             ticket["description"] = get_ticket_input("Enter a description: ")
             save_tickets_json(tickets)
+            print(print_cyan(f"Description: {ticket['description']}"))
+            input("Press 'Enter' to continue.")
 
         elif edit_choice == 6:
             ticket["priority"] = get_priority_choice("Choose priority level: 1.Low, 2.Medium, 3.High: ")
             save_tickets_json(tickets)
+            print(print_cyan(f"Priority: {ticket['priority']}"))
+            input("Press 'Enter' to continue.")
 
         elif edit_choice == 0:
             return
