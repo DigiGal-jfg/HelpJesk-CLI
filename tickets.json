@@ -38,16 +38,5 @@
         "priority": "High",
         "assigned_to": "Luigi",
         "notes": []
-    },
-    {
-        "id": 5,
-        "title": "trasig mobil",
-        "description": "mobilen f\u00f6ll fr\u00e5n 17:e v\u00e5ning och den vill inte sl\u00e5s p\u00e5",
-        "status": "Resolved",
-        "priority": "High",
-        "assigned_to": "Luigi",
-        "notes": [
-            "extra pengar om du tar det"
-        ]
     }
 ]
