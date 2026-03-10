@@ -23,7 +23,7 @@ def print_red(message):
 
 def print_yellow(message):
 
-    print(f"\033[33m{message}\033[0m")
+    return(f"\033[33m{message}\033[0m")
 
 def print_cyan(message):
 
@@ -140,21 +140,21 @@ def find_ticket_by_id(tickets, ticket_id):
 def print_ticket_summary(ticket):
 
     print("-------------------------------")  
-    print("TICKET ID:", ticket["id"])
-    print("STATUS:", ticket["status"])
-    print("TITLE:", ticket["title"])
-    wrap_text("DESCRIPTION: " + ticket["description"], width=80)
-    print("PRIORITY:", ticket["priority"])
-    print("ASSIGNED TO:", ticket["assigned_to"])
+    print(print_yellow("TICKET ID:"), ticket["id"])
+    print(print_yellow("TITLE:"), ticket["title"])
+    wrap_text(print_yellow("DESCRIPTION: ") + ticket["description"], width=80)
+    print(print_yellow("STATUS:"), ticket["status"])
+    print(print_yellow("PRIORITY:"), ticket["priority"])
+    print(print_yellow("ASSIGNED TO:"), ticket["assigned_to"])
     if ticket["notes"]:
-        print("NOTES:", ticket["notes"][0])
+        print(print_yellow("NOTES:"), ticket["notes"][0])
         for note in ticket["notes"][1:]:
             wrap_text("- " + note, width=80)
 
 def print_tickets_list(tickets):
 
     for ticket in tickets:
-        print(f"TICKET ID: {print_cyan(ticket['id'])}  | TITLE: {print_cyan(ticket['title'])} | STATUS: {print_cyan(ticket['status'])} | PRIORITY: {print_cyan(ticket['priority'])} | ASSIGNED TO: {print_cyan(ticket['assigned_to'])}")    
+        print(f"{print_yellow('TICKET ID:')} {ticket['id']}  | {print_yellow('TITLE:')} {ticket['title']} | {print_yellow('STATUS:')} {ticket['status']} | {print_yellow('PRIORITY:')} {ticket['priority']} | {print_yellow('ASSIGNED TO:')} {ticket['assigned_to']}")    
 
 def get_note(note_message):
 
@@ -193,7 +193,7 @@ def create_ticket():
     global next_ticket_id
     print("")
     print("-------------------------------")
-    print_yellow("   CREATE NEW TICKET")
+    print(print_yellow("   CREATE NEW TICKET"))
     print("-------------------------------") 
     
     title = ask_until_valid(get_ticket_input, "Enter a title: ", "Error: enter a title.") # Ticket title entry
@@ -227,7 +227,7 @@ def create_ticket():
 def view_tickets():  
     print("")
     print("-------------------------------")
-    print_yellow("   EXISTING TICKETS")
+    print(print_yellow("   EXISTING TICKETS"))
     print("-------------------------------")
     
     if tickets == []:
@@ -254,7 +254,7 @@ def view_tickets():
 
             while True:
                 print("-------------------------------")
-                print_yellow("   OPTIONS")
+                print(print_yellow("   OPTIONS"))
                 print("-------------------------------")
 
                 print("1. Edit | 2. Back to ticket list | Press 'Enter' to return to main menu")
@@ -263,12 +263,14 @@ def view_tickets():
                 
                 if details_sub_choice == "":
                     return
+                
                 if details_sub_choice == "1":
-                    print_yellow("Edit function under construction")
-                    continue #temporary
+                    edit_ticket(ticket)
+
                 elif details_sub_choice == "2":
                     choose_another = True
                     break
+
                 else:
                     print_red("Error: enter a valid choice.")
                     continue
@@ -282,7 +284,7 @@ def view_tickets():
 def edit_ticket(ticket=None):
     print("")
     print("-------------------------------")
-    print_yellow("   TICKET EDITING")
+    print(print_yellow("   TICKET EDITING"))
     print("-------------------------------")
    
     if tickets == []:
@@ -299,17 +301,16 @@ def edit_ticket(ticket=None):
     print_ticket_summary(ticket)
 
     while True:
-        print(print_cyan("-------------------------------"))
+        print("-------------------------------")
         print("1. Change status")
         print("2. Reassign operator")
         print("3. Add note")
         print("4. Edit title")
         print("5. Edit description")
         print("6. Change priority")
-        print("7. Print ticket summary")
-        print("Enter. Return to main menu")   
-
-        edit_choice = edit_menu_choice("Choose an option: ")
+        print("7. Print ticket summary")   
+        print("-------------------------------")
+        edit_choice = edit_menu_choice("Choose an option or press 'Enter' to cancel: ")
 
         if edit_choice == 1:
             ticket["status"] = get_status_choice("Choose status: 1.In Progress, 2.Resolved, 3.Closed: ")
@@ -365,7 +366,7 @@ def main():
     while True:
         print("")
         print("-------------------------------")
-        print_yellow("   MAIN MENU")
+        print(print_yellow("   MAIN MENU"))
         print("-------------------------------")
 
         print("1. Create ticket")
