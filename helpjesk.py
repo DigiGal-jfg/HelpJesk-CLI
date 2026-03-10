@@ -57,7 +57,7 @@ def main_menu_choice(mm_message):
 
 def edit_menu_choice(edit_message):
 
-    edit_options = ["1", "2", "3", "4", "5", "6"]
+    edit_options = ["1", "2", "3", "4", "5", "6", "7"]
 
     edit_choice = input(edit_message).strip()
 
@@ -306,7 +306,8 @@ def edit_ticket(ticket=None):
         print("4. Edit title")
         print("5. Edit description")
         print("6. Change priority")
-        print("Press 'Enter' to return to main menu")   
+        print("7. Print ticket summary")
+        print("Enter. Return to main menu")   
 
         edit_choice = edit_menu_choice("Choose an option: ")
 
@@ -345,7 +346,10 @@ def edit_ticket(ticket=None):
             save_tickets_json(tickets)
             print(print_cyan(f"Priority: {ticket['priority']}"))
             input("Press 'Enter' to continue.")
-
+        
+        elif edit_choice == 7:
+            print_ticket_summary(ticket)
+        
         elif edit_choice == 0:
             return
 
