@@ -17,7 +17,23 @@ Each version introduces deliberate improvements. Structure comes before complexi
 
 ---
 
-## Current Version – v0.3 (Persistent Storage)
+## Current Version – v0.4 (Ticket Editing)
+- Full ticket editing via a dedicated edit menu
+- Status updates (New → In Progress → Resolved → Closed)
+- Operator reassignment
+- Adding additional notes to existing tickets
+- Title, description, and priority editing
+- Edit confirmation messages after each change
+- Edit accessible from both the main menu and the ticket detail view
+- All edits persist immediately to JSON storage
+
+v0.4 completes the core helpdesk workflow — tickets can now be fully created, viewed, and managed through the CLI.
+
+---
+
+## Version History
+
+### v0.3 – Persistent Storage
 - Tickets now persist between sessions via JSON storage
 - `save_tickets_json()` writes the full ticket list to `tickets.json` on every change
 - `load_tickets_json()` reads tickets from file on startup, creating the file if it doesn't exist
@@ -26,11 +42,7 @@ Each version introduces deliberate improvements. Structure comes before complexi
 - Visual formatting improved — cyan labels and caps distinguish program text from user-entered content
 - `print_cyan()` added as a returning function allowing individual parts of a line to be coloured
 
-v0.3 introduces the first persistent data layer. Tickets survive program restarts without changing the core ticket creation or viewing workflow.
-
----
-
-## Version History
+v0.3 introduced the first persistent data layer. Tickets survive program restarts without changing the core ticket creation or viewing workflow.
 
 ### v0.2 – Structural Refactor
 - Full separation of responsibilities across small, focused functions
@@ -56,14 +68,15 @@ v0.2 did not introduce new features — it restructured v0.1 into a cleaner, mor
 v0.1 established the core workflow and basic functionality. Code structure was functional but dense — functions handled multiple responsibilities and the foundation for refactoring was identified early.
 
 The original v0.1 code is preserved in `helpjesk_original.py` for reference.
+
 ---
 
 ## Development Roadmap
 
-### v0.4 – Ticket Editing
-- Status updates (New → In Progress → Resolved → Closed)
-- Operator reassignment
-- Adding additional notes to existing tickets
+### v0.5 – Class-Based Refactor
+- Migrate ticket structure to a `Ticket` class
+- Bundle ticket data and ticket-related functions into a single self-contained structure
+- Improve code readability and separation of responsibilities
 
 ### v0.5 – Class-Based Refactor
 - Migrate ticket structure to a `Ticket` class
@@ -78,7 +91,7 @@ The original v0.1 code is preserved in `helpjesk_original.py` for reference.
 ---
 
 ## Data Structure
-Tickets are stored in memory as a list of dictionaries:
+Tickets are stored as a list of dictionaries and saved to `tickets.json`:
 ```python
 {
     "id": 1,

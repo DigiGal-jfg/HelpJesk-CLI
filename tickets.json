@@ -1,7 +1,7 @@
 [
     {
         "id": 1,
-        "title": "Desktop background not updating after policy change",
+        "title": "Desktop background not updating",
         "description": "User reports that the desktop background has not updated following a recent company-wide policy change. Device has been restarted once with no visible change. No functional impact reported.",
         "status": "New",
         "priority": "Low",
@@ -14,8 +14,8 @@
         "id": 2,
         "title": "External emails remain in Outbox",
         "description": "User is able to send internal emails successfully, but emails addressed to external recipients remain stuck in the Outbox. Issue began approximately 09:00 today. General internet connectivity confirmed working.",
-        "status": "New",
-        "priority": "High",
+        "status": "In Progress",
+        "priority": "Medium",
         "assigned_to": "Lara",
         "notes": []
     },
@@ -34,7 +34,7 @@
         "id": 4,
         "title": "VPN connection drops after 10 minutes",
         "description": "User reports that the VPN disconnects automatically after approximately 10 minutes of use. Reconnecting manually works but the issue repeats. Affects working from home only.",
-        "status": "New",
+        "status": "In Progress",
         "priority": "High",
         "assigned_to": "Luigi",
         "notes": []
