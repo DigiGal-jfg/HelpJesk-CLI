@@ -30,6 +30,68 @@ class Ticket:
             for note in self.notes[1:]:
                 wrap_text("- " + note, width=80)
 
+    def edit_ticket(self):
+        print("")
+        print("-------------------------------")
+        print(print_yellow("   TICKET EDITING"))
+        print("-------------------------------")
+            
+        self.print_ticket_summary()
+
+        while True:
+            print("-------------------------------")
+            print("1. Change status")
+            print("2. Reassign operator")
+            print("3. Add note")
+            print("4. Edit title")
+            print("5. Edit description")
+            print("6. Change priority")
+            print("7. Print ticket")   
+            print("-------------------------------")
+            edit_choice = edit_menu_choice("Choose an option or press 'Enter' to cancel: ")
+
+            if edit_choice == 1:
+                self.status = get_status_choice("Choose status: 1.In Progress, 2.Resolved, 3.Closed: ")
+                save_tickets_json(tickets)
+                print(print_yellow(f"Status: {self.status}"))
+                input("Press 'Enter' to continue.")
+            
+            elif edit_choice == 2:
+                self.assigned_to = choose_operator(operators)
+                save_tickets_json(tickets)
+                print(print_yellow(f"Operator: {self.assigned_to}"))
+                input("Press 'Enter' to continue.")
+
+            elif edit_choice == 3:
+                self.notes.append(get_note("Add an internal note: "))
+                save_tickets_json(tickets)
+                print(print_yellow(f"Note: {self.notes[-1]}"))
+                input("Press 'Enter' to continue.")
+
+            elif edit_choice == 4:
+                self.title = get_ticket_input("Enter a title: ")
+                save_tickets_json(tickets)
+                print(print_yellow(f"Title: {self.title}"))
+                input("Press 'Enter' to continue.")
+
+            elif edit_choice == 5:
+                self.description = get_ticket_input("Enter a description: ")
+                save_tickets_json(tickets)
+                print(print_yellow(f"Description: {self.description}"))
+                input("Press 'Enter' to continue.")
+
+            elif edit_choice == 6:
+                self.priority = get_priority_choice("Choose priority level: 1.Low, 2.Medium, 3.High: ")
+                save_tickets_json(tickets)
+                print(print_yellow(f"Priority: {self.priority}"))
+                input("Press 'Enter' to continue.")
+            
+            elif edit_choice == 7:
+                self.print_ticket_summary()
+            
+            elif edit_choice == 0:
+                return
+
 tickets = []
 operators = ["Lara", "Mario", "Luigi"]
 next_ticket_id = 0
