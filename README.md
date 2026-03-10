@@ -78,11 +78,6 @@ The original v0.1 code is preserved in `helpjesk_original.py` for reference.
 - Bundle ticket data and ticket-related functions into a single self-contained structure
 - Improve code readability and separation of responsibilities
 
-### v0.5 – Class-Based Refactor
-- Migrate ticket structure to a `Ticket` class
-- Bundle ticket data and ticket-related functions into a single self-contained structure
-- Improve code readability and separation of responsibilities
-
 ### Future Iterations
 - Timestamped notes
 - Dynamic operator management (add/remove operators at runtime)
