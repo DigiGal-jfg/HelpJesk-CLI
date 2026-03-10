@@ -16,7 +16,19 @@ class Ticket:
         else:
             self.notes = notes
 
+    def print_ticket_summary(self):
 
+        print("-------------------------------")  
+        print(print_yellow("TICKET ID:"), self.id)
+        print(print_yellow("TITLE:"), self.title)
+        wrap_text(print_yellow("DESCRIPTION: ") + self.description, width=80)
+        print(print_yellow("STATUS:"), self.status)
+        print(print_yellow("PRIORITY:"), self.priority)
+        print(print_yellow("ASSIGNED TO:"), self.assigned_to)
+        if self.notes:
+            print(print_yellow("NOTES:"), self.notes[0])
+            for note in self.notes[1:]:
+                wrap_text("- " + note, width=80)
 
 tickets = []
 operators = ["Lara", "Mario", "Luigi"]
