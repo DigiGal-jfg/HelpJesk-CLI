@@ -83,7 +83,17 @@ def get_priority_choice(prio_message):
         return None
 
 def get_status_choice(status_message):
-    pass
+    
+    status_choice = input(status_message).strip()
+
+    if status_choice == "1":
+        return "In Progress"
+    elif status_choice == "2":
+        return "Resolved"
+    elif status_choice == "3":
+        return "Closed"
+    else:
+        return None
 
 def choose_operator(operators):
     while True:    
@@ -300,7 +310,11 @@ def edit_ticket(ticket=None):
         edit_choice = edit_menu_choice("Choose an option: ")
 
         if edit_choice == 1:
-            pass
+            ticket["status"] = get_status_choice("Choose status: 1.In Progress, 2.Resolved, 3.Closed: ")
+            save_tickets_json(tickets)
+            print(print_cyan(f"Status: {ticket['status']}"))
+            input("Press 'Enter' to continue.")
+        
         elif edit_choice == 2:
             ticket["assigned_to"] = choose_operator(operators)
             save_tickets_json(tickets)
