@@ -140,13 +140,14 @@ def find_ticket_by_id(tickets, ticket_id):
 def print_ticket_summary(ticket):
 
     print("-------------------------------")  
-    print("TICKET ID:", print_cyan(ticket["id"]))
-    print("TITLE:", print_cyan(ticket["title"]))
-    wrap_text("DESCRIPTION: " + print_cyan(ticket["description"]), width=80)
-    print("PRIORITY:", print_cyan(ticket["priority"]))
-    print("ASSIGNED TO:", print_cyan(ticket["assigned_to"]))
+    print("TICKET ID:", ticket["id"])
+    print("STATUS:", ticket["status"])
+    print("TITLE:", ticket["title"])
+    wrap_text("DESCRIPTION: " + ticket["description"], width=80)
+    print("PRIORITY:", ticket["priority"])
+    print("ASSIGNED TO:", ticket["assigned_to"])
     if ticket["notes"]:
-        print("NOTES:", print_cyan(ticket["notes"][0]))
+        print("NOTES:", ticket["notes"][0])
         for note in ticket["notes"][1:]:
             wrap_text("- " + note, width=80)
 
@@ -298,7 +299,7 @@ def edit_ticket(ticket=None):
     print_ticket_summary(ticket)
 
     while True:
-        print("-------------------------------")
+        print(print_cyan("-------------------------------"))
         print("1. Change status")
         print("2. Reassign operator")
         print("3. Add note")
