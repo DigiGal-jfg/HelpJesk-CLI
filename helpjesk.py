@@ -1,6 +1,23 @@
 import os
 import json
 import textwrap
+
+class Ticket:
+    def __init__(self, id, title, description, priority, status = "New", assigned_to = "unassigned", notes = None):
+        
+        self.id = id
+        self.title = title
+        self.description = description
+        self.priority = priority
+        self.status = status
+        self.assigned_to = assigned_to
+        if notes is None:
+            self.notes = []
+        else:
+            self.notes = notes
+
+
+
 tickets = []
 operators = ["Lara", "Mario", "Luigi"]
 next_ticket_id = 0
